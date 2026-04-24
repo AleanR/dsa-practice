@@ -22,8 +22,18 @@ def selection_sort(arr):
     return arr
 
 
+# Insertion Sort - O(n^2) time, O(1) space
+# Builds sorted portion on the left by inserting each element into its correct position
+# key saves the current element, j walks left shifting larger elements right until key fits
 def insertion_sort(arr):
-    pass
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
 
 
 def merge_sort(arr):
