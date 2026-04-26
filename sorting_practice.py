@@ -36,9 +36,52 @@ def insertion_sort(arr):
     return arr
 
 
+# Merge Sort - O(n log n) time, O(n) space
+# Recursively splits the array in half, then merges the sorted halves back together
+# The merge step compares front elements of each half and builds a sorted result
 def merge_sort(arr):
-    pass
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+
+    merged = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+    return merged
 
 
-def quick_sort(arr):
-    pass
+# Quick Sort - O(n log n) avg / O(n^2) worst time, O(log n) space
+# Picks a pivot, partitions elements into less-than and greater-than groups, recurses on each
+# Last element is used as pivot; partition walks left pointer until it exceeds right
+def quick_sort(arr, low=0, high=None):
+    if high is None:
+        high = len(arr) - 1
+
+    if low < high:
+        pivot_idx = _partition(arr, low, high)
+        quick_sort(arr, low, pivot_idx - 1)
+        quick_sort(arr, pivot_idx + 1, high)
+
+    return arr
+
+
+def _partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
